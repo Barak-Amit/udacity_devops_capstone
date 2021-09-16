@@ -381,5 +381,5 @@ workflows:
     jobs:
       - update-files
       - install-dependencies
-      - lint-dockerfile
-       # requires: [install-dependencies]
+      - lint-dockerfile:
+          requires: [install-dependencies]
