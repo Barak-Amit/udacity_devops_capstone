@@ -77,14 +77,14 @@ jobs:
           working_directory: ./app
           command: |
             sed -i -e "s/@WorkflowId@/${CIRCLE_WORKFLOW_ID:0:7}/;" templates/about.html
-            sed -i -e "s/@GIT_COMMIT@/${CIRCLE_SHA1}/;" templates/about.html
+            sed -i -e "s/@GIT_COMMIT@/${CIRCLE_SHA1:0:7}/;" templates/about.html
             pwd
             ls -ltr
             cat templates/about.html
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/backend/node_modules
+            - project/app
 
 
   install-frontend-dependencies:
