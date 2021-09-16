@@ -108,7 +108,7 @@ jobs:
             - ~/
           key: v1-dependencies-{{ checksum "app/requirements.txt" }}
 
-  lint dockerfile:
+  lint-dockerfile:
     docker:
       - image: python:3.7.3-stretch
     steps:
@@ -383,3 +383,5 @@ workflows:
     jobs:
       - update-files
       - install-dependencies
+      - lint-dockerfile
+        requires: install-dependencies
