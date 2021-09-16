@@ -91,7 +91,7 @@ jobs:
     <<: *default
     steps:
       - checkout
-   - run:
+      - run:
           name: install dependencies
           command: |
             python3 -m venv ~/.devops
