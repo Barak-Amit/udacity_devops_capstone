@@ -382,4 +382,4 @@ workflows:
       - update-files
       - install-dependencies
       - lint-dockerfile:
-        requires: install-dependencies
+       # requires: [install-dependencies]
