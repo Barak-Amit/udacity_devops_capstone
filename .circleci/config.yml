@@ -105,102 +105,22 @@ jobs:
             chmod +x /bin/hadolint
       - save_cache:
           paths:
-            - ./venv
+            - ~/
           key: v1-dependencies-{{ checksum "app/requirements.txt" }}
 
-  build-frontend:
-    <<: *default
-    steps:
-      - build-target:
-          module: "frontend"
-          target: "run build"
-
-  build-backend:
-    <<: *default
-    steps:
-      - build-target:
-          module: "backend"
-          target: "run build"
-      - persist_to_workspace:
-          name: Persisting the dist folder
-          root: ~/
-          paths:
-            - project/backend/dist
-
-  test-frontend:
-    <<: *default
-    steps:
-      - build-target:
-          module: "frontend"
-          target: "run test"
-                
-  test-backend:
-    <<: *default
-    steps:
-      - build-target:
-          module: "backend"
-          target: "run test"
-
-  scan-frontend:
-    <<: *default
-    steps:
-      - build-target:
-          module: "frontend"
-          target: "audit --audit-level=critical"
-
-  scan-backend:
-    <<: *default
-    steps:
-      - build-target:
-          module: "backend"
-          target: "audit --audit-level=critical"
-
-  deploy-infrastructure:
+  lint dockerfile:
     docker:
-      - image: amazon/aws-cli
+      - image: python:3.7.3-stretch
     steps:
       - checkout
-      - run: yum -y install tar gzip
+      - attach_workspace:
+        at: ~/
       - run:
-          name: Ensure back-end infrastructure exists
-          command: |
-            aws cloudformation deploy \
-              --template-file .circleci/files/backend.yml \
-              --tags project=AB_UDACITY_PROJECT3_BACKEND \
-              --stack-name "backend-udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"
-      - run:
-          name: Save backend URL in memstash
-          command: |
-            BACKEND_IP=$(aws ec2 describe-instances \
-              --query 'Reservations[*].Instances[*].PublicIpAddress' \
-              --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --output text)
+        working_directory: ./app
+        command: |
+          . ~/.devops/bin/activate
+            make lint
 
-            curl -H "Content-Type: text/plain" -H "token: b95f8dc3-9ee8-4285-b889-af9c1b5e8329" --request PUT --data "http://$BACKEND_IP:3030" https://api.memstash.io/values/BACKEND_URL
-
-      - run:
-          name: Ensure front-end infrastructure exist
-          command: |
-            aws cloudformation deploy \
-              --template-file .circleci/files/frontend.yml \
-              --tags project=AB_UDACITY_PROJECT3_FRONTEND \
-              --stack-name "frontend-udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"
-      - run:
-          name: Add back-end ip to ansible inventory
-          command: |
-            aws ec2 describe-instances \
-              --query 'Reservations[*].Instances[*].PublicIpAddress' \
-              --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --output text >> .circleci/ansible/inventory.txt
-            cat .circleci/ansible/inventory.txt
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project/.circleci/ansible/inventory.txt
-      - destroy-environment:
-          stackname: udapeople-${CIRCLE_WORKFLOW_ID:0:7}
 
   configure-infrastructure:
     docker:
