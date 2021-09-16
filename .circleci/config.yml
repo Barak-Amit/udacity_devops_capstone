@@ -87,18 +87,23 @@ jobs:
             - project/app
 
 
-  install-frontend-dependencies:
+  install-dependencies:
     <<: *default
     steps:
       - checkout
-      - run:
-          name: npm install
-          working_directory: ./frontend
-          command: npm install
-      - persist_to_workspace:
-          root: .
+   - run:
+          name: install dependencies
+          command: |
+            python3 -m venv ~/.devops
+            . ~/.devops/bin/activate
+            make install
+            # Install hadolint
+            wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
+            chmod +x /bin/hadolint
+      - save_cache:
           paths:
-            - frontend/node_modules
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
 
   build-frontend:
     <<: *default
@@ -454,3 +459,4 @@ workflows:
   default:
     jobs:
       - update-files
+      - install-dependencies
