@@ -113,12 +113,12 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-        at: ~/
+          at: ~/
       - run:
-        working_directory: ./app
-        command: |
-          . ~/.devops/bin/activate
-            make lint
+          working_directory: ./app
+          command: |
+            . ~/.devops/bin/activate
+              make lint
 
   configure-infrastructure:
     docker:
