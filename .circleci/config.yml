@@ -95,6 +95,7 @@ jobs:
       - checkout
       - run:
           name: install dependencies
+          working_directory: ./app
           command: |
             python3 -m venv ~/.devops
             . ~/.devops/bin/activate
