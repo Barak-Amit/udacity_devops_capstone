@@ -90,7 +90,6 @@ jobs:
   install-dependencies:
     docker:
       - image: python:3.7.3-stretch
-
     steps:
       - checkout
       - run:
@@ -120,7 +119,6 @@ jobs:
         command: |
           . ~/.devops/bin/activate
             make lint
-
 
   configure-infrastructure:
     docker:
@@ -384,4 +382,4 @@ workflows:
       - update-files
       - install-dependencies
       - lint-dockerfile:
-        requires: [install-dependencies]
+        requires: install-dependencies
