@@ -103,9 +103,9 @@ jobs:
             wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
             chmod +x /bin/hadolint
       - save_cache:
+          root: ~/
           paths:
-            - ~/
-          key: v1-dependencies-{{ checksum "app/requirements.txt" }}
+            - project/app
 
   lint-dockerfile:
     docker:
