@@ -115,8 +115,7 @@ jobs:
           command: |
             docker build --tag=amitbarak/capstoneudacity .
             docker image ls
-            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-
+            docker login --username $DOCKER_USER --password $DOCKER_PASS
 
 workflows:
   default:
