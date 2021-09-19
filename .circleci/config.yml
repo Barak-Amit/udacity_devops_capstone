@@ -124,6 +124,7 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
+      - run: yum -y install tar gzip
 #      - run:
 #          name: Install AWS CLI dependencies
 #          working_directory: /tmp
