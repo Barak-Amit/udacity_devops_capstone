@@ -9,7 +9,7 @@ LOG.setLevel(logging.INFO)
 
 @app.route("/")
 def home():
-    html = f"<h3>Hi This is Udacity DevOps Capstone Project</h3>"
+    html = "<h3>Hi This is Udacity DevOps Capstone Project</h3>"
     return html.format(format)
     
 @app.route("/about")
@@ -20,7 +20,7 @@ def index():
 def predict():
     # Logging the input payload
     json_payload = request.json
-    LOG.info(f"JSON payload: \n{json_payload}")
+    LOG.info("JSON payload: \n{json_payload}")
     return jsonify({'payload': "Thank you !!"})
 
 if __name__ == "__main__":
