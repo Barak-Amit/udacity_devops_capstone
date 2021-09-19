@@ -145,3 +145,5 @@ workflows:
       - lint-dockerfile
       - create-and-upload-dockerimage:
           requires: [update-files,lint-dockerfile]
+      - create-cluster:
+          requires: [create-and-upload-dockerimage]
