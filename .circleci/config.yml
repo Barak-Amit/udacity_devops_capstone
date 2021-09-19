@@ -121,7 +121,7 @@ jobs:
 
   create-cluster:
     docker:
-      - image: circleci/node
+      - image: circleci/kubernetes@0.12.0
     steps:
       - checkout
       - run:
@@ -136,6 +136,7 @@ jobs:
           name: Deploy frontend objects to S3
           working_directory: ./app
           command: |
+            docker login --username $DOCKER_USER --password $DOCKER_PASS
             sh run_kubernetes.sh
 
 workflows:
