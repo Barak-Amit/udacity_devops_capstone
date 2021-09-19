@@ -104,7 +104,7 @@ jobs:
             chmod +x /bin/hadolint
             make lint
 
-  create-dockerimage:
+  create-and-upload-dockerimage:
     machine: true
     steps:
       - checkout
@@ -115,6 +115,7 @@ jobs:
           command: |
             docker build --tag=amitbarak/capstoneudacity .
             docker image ls
+            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
 
 
 workflows:
@@ -122,5 +123,5 @@ workflows:
     jobs:
       - update-files
       - lint-dockerfile
-      - create-dockerimage:
+      - create-and-upload-dockerimage:
           requires: [update-files,lint-dockerfile]
