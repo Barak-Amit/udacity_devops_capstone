@@ -106,7 +106,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - ~/
+            - project/app
 
   create-dockerimage:
     machine: true
@@ -125,7 +125,6 @@ workflows:
   default:
     jobs:
       - update-files
-      - lint-dockerfile:
-          requires: [update-files]
+      - lint-dockerfile
       - create-dockerimage:
-          requires: [lint-dockerfile]
+          requires: [update-files,lint-dockerfile]
