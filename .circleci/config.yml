@@ -117,8 +117,9 @@ jobs:
       - run:
           working_directory: ./app
           command: |
+            ls -a ~/
             . ~/.devops/bin/activate
-              make lint
+            make lint
 
   create-dockerimage:
     docker:
@@ -141,5 +142,5 @@ workflows:
       - install-dependencies
       - lint-dockerfile:
           requires: [install-dependencies]
-      - create-dockerimage:
-          requires: [lint-dockerfile]
+      - create-dockerimage
+         # requires: [lint-dockerfile]
