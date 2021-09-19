@@ -121,7 +121,7 @@ jobs:
 
   create-cluster:
     docker:
-      - image: circleci/node
+      - image: amazon/aws-cli
     steps:
       - checkout
       - run:
@@ -140,7 +140,7 @@ jobs:
             curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
             sudo mv /tmp/eksctl /usr/local/bin
             eksctl version
-            aws ec2 describe-key-pairs
+            aws ec2 describe-key-pairs --key-name capstone
             docker login --username $DOCKER_USER --password $DOCKER_PASS
             sh create-cluster.sh
 
@@ -151,5 +151,5 @@ workflows:
       - lint-dockerfile
       - create-and-upload-dockerimage:
           requires: [update-files,lint-dockerfile]
-      - create-cluster:
-          requires: [create-and-upload-dockerimage]
+      - create-cluster
+         # requires: [create-and-upload-dockerimage]
