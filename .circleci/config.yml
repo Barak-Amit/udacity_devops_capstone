@@ -153,3 +153,4 @@ workflows:
           cluster-name: eks-demo-deployment
       - aws-eks/delete-cluster:
           cluster-name: eks-demo-deployment
+          requires: [aws-eks/create-cluster]
