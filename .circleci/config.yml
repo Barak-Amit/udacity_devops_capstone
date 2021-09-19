@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   slack: circleci/slack@4.4.2
-  aws-eks: circleci/aws-eks@x.y
+  aws-eks: circleci/aws-eks
 
 defaults: &default
   docker:
