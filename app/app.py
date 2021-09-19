@@ -21,7 +21,7 @@ def predict():
     # Logging the input payload
     json_payload = request.json
     LOG.info("JSON payload: \n{json_payload}")
-    return jsonify({'payload': "Thank you !!"})
+    return jsonify({'payload': json_payload})
 
 if __name__ == "__main__":
     # start server
