@@ -116,7 +116,7 @@ jobs:
             docker build --tag=abdocer123/udacity:capstone .
             docker image ls
             docker login --username $DOCKER_USER --password $DOCKER_PASS
-            docker push abdocer/udacity:capstone
+            docker push abdocer123/udacity:capstone
 
 
 workflows:
