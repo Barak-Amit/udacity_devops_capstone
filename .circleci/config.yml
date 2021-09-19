@@ -145,7 +145,7 @@ jobs:
 
   deploy-cluster:
     docker:
-      - image: circleci/node
+      - image: python:3.7.3-stretch
     steps:
       - checkout
       - run:
