@@ -166,4 +166,4 @@ workflows:
       - create-cluster:
           requires: [update-files]
       - deploy-cluster:
-          requires: [create-and-upload-dockerimage, crate-cluster]
+          requires: [create-and-upload-dockerimage, create-cluster]
