@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   slack: circleci/slack@4.4.2
+  aws-eks: circleci/aws-eks@x.y
 
 defaults: &default
   docker:
@@ -148,3 +149,7 @@ workflows:
           requires: [update-files,lint-dockerfile]
       - create-cluster:
           requires: [create-and-upload-dockerimage]
+      - aws-eks/create-cluster:
+          cluster-name: eks-demo-deployment
+      - aws-eks/delete-cluster:
+          cluster-name: eks-demo-deployment
