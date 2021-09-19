@@ -103,10 +103,6 @@ jobs:
             wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
             chmod +x /bin/hadolint
             make lint
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project/app
 
   create-dockerimage:
     machine: true
