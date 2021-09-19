@@ -132,7 +132,6 @@ jobs:
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
             sudo ./aws/install
-            curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
       - run:
           name: Create Cluster
           working_directory: ./eksCluster
@@ -143,6 +142,19 @@ jobs:
             aws ec2 describe-key-pairs --key-name capstone
             docker login --username $DOCKER_USER --password $DOCKER_PASS
             sh create-cluster.sh
+
+  deploy-cluster:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: deploy Cluster
+          working_directory: ./eksCluster
+          command: |
+              kubectl --v=6 apply -f deployment.yaml
+              kubectl --v=6 apply -f service.yaml
+
 
 workflows:
   default:
