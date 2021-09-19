@@ -113,11 +113,11 @@ jobs:
       - run:
           working_directory: ./app
           command: |
-            docker build --tag=amitbarak/capstoneudacity .
+            docker build --tag=abdocer123/udacity:capstone .
             docker image ls
-            echo $DOCKER_USER
-            echo $DOCKER_PASS
             docker login --username $DOCKER_USER --password $DOCKER_PASS
+            docker push abdocer/udacity:capstone
+
 
 workflows:
   default:
