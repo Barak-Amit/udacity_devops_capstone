@@ -87,7 +87,7 @@ jobs:
             - project/app
 
 
-  install-dependencies:
+  lint-dockerfile:
     docker:
       - image: python:3.7.3-stretch
     steps:
@@ -102,24 +102,11 @@ jobs:
             # Install hadolint
             wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
             chmod +x /bin/hadolint
+            make lint
       - persist_to_workspace:
           root: ~/
           paths:
             - ~/
-
-  lint-dockerfile:
-    docker:
-      - image: python:3.7.3-stretch
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ~/
-      - run:
-          working_directory: ./app
-          command: |
-            ls -a ~/
-            . ~/.devops/bin/activate
-            make lint
 
   create-dockerimage:
     machine: true
@@ -138,8 +125,7 @@ workflows:
   default:
     jobs:
       - update-files
-      - install-dependencies
       - lint-dockerfile:
-          requires: [install-dependencies]
+          requires: [update-files]
       - create-dockerimage:
           requires: [lint-dockerfile]
