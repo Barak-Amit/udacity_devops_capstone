@@ -4,10 +4,10 @@ kind: ClusterConfig
 
 metadata:
   name: capstoneudacity-eksctl
-  region: us-east-1
+  region: us-west-2
   version: "1.17"
 
-availabilityZones: ["us-east-1a", "us-east-1b", "us-east-1c"]
+availabilityZones: ["us-west-2a", "us-west-2b", "us-west-2c"]
 
 managedNodeGroups:
 - name: nodegroup
@@ -15,7 +15,7 @@ managedNodeGroups:
   instanceType: t2.micro
   ssh:
     allow: true
-    publicKeyName: 079b299c844f3fe08
+    publicKeyName: capstone
 
 # To enable all of the control plane logs, uncomment below:
 # cloudWatch:
