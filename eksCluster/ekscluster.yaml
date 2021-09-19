@@ -15,7 +15,7 @@ managedNodeGroups:
   instanceType: t2.micro
   ssh:
     allow: true
-    publicKeyName: capstoneudacity
+    publicKeyName: capstone
 
 # To enable all of the control plane logs, uncomment below:
 # cloudWatch:
@@ -23,4 +23,5 @@ managedNodeGroups:
 #    enableTypes: ["*"]
 
 secretsEncryption:
-  keyARN: arn:aws:kms:us-east-1:287408872399:key/fab165c5-c142-4474-83d7-0db5223e9d66
+  keyARN: arn:aws:kms:us-west-2:660171700894:key/cbd819d2-2262-478e-a7fc-8db3ca9d35ae
+
