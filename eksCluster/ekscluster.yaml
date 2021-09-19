@@ -15,7 +15,7 @@ managedNodeGroups:
   instanceType: t2.micro
   ssh:
     allow: true
-    publicKeyName: capstone
+    publicKeyName: 079b299c844f3fe08
 
 # To enable all of the control plane logs, uncomment below:
 # cloudWatch:
