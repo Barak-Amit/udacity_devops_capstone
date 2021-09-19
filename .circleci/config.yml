@@ -139,7 +139,7 @@ jobs:
           working_directory: ./eksCluster
           command: |
             curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
-            sudo mv /tmp/eksctl /usr/local/bin
+            mv /tmp/eksctl /usr/local/bin
             eksctl version
             aws ec2 describe-key-pairs --key-name capstone
             docker login --username $DOCKER_USER --password $DOCKER_PASS
