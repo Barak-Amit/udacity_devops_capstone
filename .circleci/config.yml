@@ -116,8 +116,6 @@ jobs:
           name: Create and Upload Image to DockerHub
           working_directory: ./app
           command: |
-            python -m venv ~/.devops
-            . ~/.devops/bin/activate
             docker build --tag=abdocer123/udacity:capstone .
             docker image ls
             
