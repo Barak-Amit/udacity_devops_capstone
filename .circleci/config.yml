@@ -202,7 +202,7 @@ workflows:
           requires: [update-files,lint-dockerfile]
       - create-cluster:
           cluster-name: capstoneudacity-eksctl
-          requies: [update-files, lint-dockerfile]
+          requires: [update-files, lint-dockerfile]
       - create-deployment:
           cluster-name: capstoneudacity-eksctl
           requires: [create-cluster, create-and-upload-dockerimage]
