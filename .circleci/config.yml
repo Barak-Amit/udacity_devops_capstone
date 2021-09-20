@@ -58,6 +58,8 @@ jobs:
           command: |
             docker build --tag=abdocer123/udacity:capstone .
             docker image ls
+
+            echo templates/about.html
             
             docker run -d --rm --name capstone -p 80:80 abdocer123/udacity:capstone
             sleep 10
