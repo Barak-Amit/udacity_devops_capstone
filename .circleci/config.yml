@@ -98,7 +98,7 @@ jobs:
           name: install dependencies
           working_directory: ./app
           command: |
-            python3 -m venv ~/.devops
+            python -m venv ~/.devops
             . ~/.devops/bin/activate
             make install
             # Install hadolint
