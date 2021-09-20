@@ -198,6 +198,10 @@ jobs:
           get-rollout-status: true
           resource-file-path: eksCluster/deployment.yaml
           resource-name: deployment/capstoneudacity
+      - kubernetes/create-or-update-resource:
+          get-rollout-status: true
+          resource-file-path: eksCluster/service.yaml
+          resource-name: deployment/capstoneudacity
 
   test-cluster:
     executor: aws-eks/python3
