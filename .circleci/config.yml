@@ -212,4 +212,4 @@ workflows:
           requires: [test-eks, create-and-upload-dockerimage]
       - test-cluster:
           cluster-name: capstoneudacity-eksctl
-          requires: [create-depployment]
+          requires: [create-deployment]
