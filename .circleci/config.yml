@@ -140,6 +140,30 @@ jobs:
             sh upload_docker.sh
 
   create-cluster:
+    docker:
+      - image: circleci/node
+    steps:
+      - checkout
+      - run:
+          name: Install AWS CLI dependencies
+          working_directory: /tmp
+          command: |
+            sudo apt-get update && sudo apt-get install -yy less
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+      - run:
+          name: Create Cluster
+          working_directory: ./eksCluster
+          command: |
+            curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+            sudo mv /tmp/eksctl /usr/local/bin
+            eksctl version
+            aws ec2 describe-key-pairs --key-name capstone
+            docker login --username $DOCKER_USER --password $DOCKER_PASS
+            sh create-cluster.sh
+
+  test-eks:
     executor: aws-eks/python3
     parameters:
       cluster-name:
@@ -199,11 +223,13 @@ workflows:
       - create-and-upload-dockerimage:
           requires: [update-files,lint-dockerfile]
       - create-cluster:
-          cluster-name: capstoneudacity-eksctl
           requires: [update-files, lint-dockerfile]
+      - test-eks:
+          cluster-name: capstoneudacity-eksctl
+          requires: [create-cluster]
       - create-deployment:
           cluster-name: capstoneudacity-eksctl
-          requires: [create-cluster, create-and-upload-dockerimage]
+          requires: [test-eks, create-and-upload-dockerimage]
       - test-cluster:
           cluster-name: capstoneudacity-eksctl
           requires: [create-deployment]
