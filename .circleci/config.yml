@@ -123,14 +123,14 @@ jobs:
             sleep 10
             docker container ls
             sleep 5
-            export URL="http://localhost:8081"
+            export URL="http://localhost:8000/about.html"
             export output=$(curl -s $URL)
             echo "Output of curl : $output"
             if [[ $output == *"${CIRCLE_WORKFLOW_ID:0:7}"* ]]; then
                echo "Success"
-              docker stop myapp
+              docker stop capstone
             else
-              docker stop myapp
+              docker stop capstone
               exit 1
             fi
             
