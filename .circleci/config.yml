@@ -35,7 +35,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: install dependencies
+          name: Lint Dockerfile
           working_directory: ./app
           command: |
             python3 -m venv ~/.devops
@@ -142,6 +142,11 @@ jobs:
           get-rollout-status: true
           resource-file-path: eksCluster/service.yaml
           resource-name: deployment/capstoneudacity
+      -run:
+        name: Rolling Deployment
+        command: |
+           kubectl rollout restart deployment/capstoneudacity
+
 
   test-cluster:
     executor: aws-eks/python3
