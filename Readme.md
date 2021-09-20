@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/Barak-Amit/udacity_devops_capstone/tree/main.svg?style=svg)](https://circleci.com/gh/Barak-Amit/udacity_devops_capstone/tree/main)
+
 Final Cloud DevOps Engineer Capstone Project
 
 > In this project, I applied my skills and knowledge which was developed throughout the Cloud DevOps Nanodegree program.
@@ -13,17 +15,6 @@ Final Cloud DevOps Engineer Capstone Project
 
 ## About Project: 
 
-> I created a CI/CD pipeline for a basic website that deploys to a cluster in AWS EKS which is Blue/Green Deployment.
+> I created a CI/CD pipeline for a basic website that deploys to a cluster in AWS EKS.
 
-![img-1](Images-of-result-deploy/Project.png)
-
-## Project Requirement:
-
-> To be able to use this CI/CD pipeline you will need to install:
-
-* CircleCI
-* Docker
-* Pip
-* AWS Cli
-* Eksctl
-* Kubectl
+![img-1](Screenshots/CircleCI_Pipeline.PNG)
