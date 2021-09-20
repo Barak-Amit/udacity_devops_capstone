@@ -119,11 +119,14 @@ jobs:
             docker build --tag=abdocer123/udacity:capstone .
             docker image ls
             
-            docker run -d --rm --name capstone -p 8081:8080 abdocer123/udacity:capstone
+            docker run -d --rm --name capstone -p 8081:8080 abdocer123/udacity
             sleep 10
             docker container ls
             sleep 5
-            export URL="http://localhost:80/about"
+            export URL="http://localhost:8080/"
+            echo $(curl -s $URL)
+            echo $(curl -s $http://localhost:8081/)
+            echo $(curl -s $http://localhost:80/)
             export output=$(curl -s $URL)
             echo "Output of curl : $output"
             if [[ $output == *"${CIRCLE_WORKFLOW_ID:0:7}"* ]]; then
