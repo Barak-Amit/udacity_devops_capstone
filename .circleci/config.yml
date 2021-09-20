@@ -107,7 +107,8 @@ jobs:
             make lint
 
   create-and-upload-dockerimage:
-    machine: true
+    docker:
+      - image: python:3.7.3-stretch
     steps:
       - checkout
       - attach_workspace:
