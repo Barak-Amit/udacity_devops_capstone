@@ -9,66 +9,6 @@ defaults: &default
   docker:
     - image: circleci/node:13.8.0
 
-commands:
-  destroy-environment:
-    description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
-    parameters:
-      stackname:
-        type: string
-        default: "frontend"   
-    steps:
-      - run:
-          name: Destroy environments
-          when: on_fail
-          command: |
-            aws s3 rm s3://<< parameters.stackname >> --recursive
-            aws cloudformation delete-stack --stack-name backend-<< parameters.stackname >>
-            aws cloudformation delete-stack --stack-name frontend-<< parameters.stackname >>
-
-  revert_migrations:
-    description: Revert the last migration if successfully run in the current workflow.
-    parameters:
-      when:
-        type: string
-      id:
-        type: string
-    steps:
-      - run:
-          name: Revert migrations
-          working_directory: ./backend
-          command: |
-            SUCCESS=$(curl -H "token: b95f8dc3-9ee8-4285-b889-af9c1b5e8329" --request GET https://api.memstash.io/values/DB_MIGRATION_<< parameters.id >>)
-            echo $SUCCESS
-            if [[ "$SUCCESS" == "success" ]]
-            then
-              npm run migrations:revert
-            fi
-          when: << parameters.when >>
-
-  build-target:
-    description: Build the environment.
-    parameters:
-      module:
-        type: string
-        default: "frontend"
-      target:
-        type: string
-        default: "build"
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ~/
-      - restore_cache:
-          keys: [<< parameters.module >>-build]
-      - run:
-          command: |
-            cd << parameters.module >>
-            # npm i
-            npm << parameters.target >>
-      - save_cache:
-          paths: [<< parameters.module >>/node_modules]
-          key: << parameters.module >>-build
-
 jobs:
   update-files:
     <<: *default
@@ -218,7 +158,6 @@ jobs:
           name: Kube cluster
           command: |
             kubectl get services
-            kubectl describe service
 
 workflows:
   default:
