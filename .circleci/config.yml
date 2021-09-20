@@ -146,7 +146,10 @@ jobs:
   deploy-cluster:
     executor: aws-eks/python3
     parameters:
-      cluster-name: capstoneudacity-eksctl
+      cluster-name:
+        description: |
+          Name of the EKS cluster
+        type: string
     steps:
       - checkout
       - kubernetes/install
@@ -197,4 +200,5 @@ workflows:
       - create-cluster:
           requires: [update-files]
       - deploy-cluster:
+          cluster-name: capstoneudacity-eksctl
           requires: [create-and-upload-dockerimage, create-cluster]
