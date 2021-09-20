@@ -98,7 +98,7 @@ jobs:
           name: install dependencies
           working_directory: ./app
           command: |
-            python -m venv ~/.devops
+            python3 -m venv ~/.devops
             . ~/.devops/bin/activate
             make install
             # Install hadolint
@@ -116,7 +116,7 @@ jobs:
           name: Create and Upload Image to DockerHub
           working_directory: ./app
           command: |
-            python3 -m venv ~/.devops
+            python -m venv ~/.devops
             . ~/.devops/bin/activate
             docker build --tag=abdocer123/udacity:capstone .
             docker image ls
