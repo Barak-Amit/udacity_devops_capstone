@@ -218,6 +218,7 @@ jobs:
           name: Kube cluster
           command: |
             kubectl get services
+            kubectl describe service
 
 workflows:
   default:
