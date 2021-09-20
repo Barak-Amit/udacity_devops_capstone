@@ -225,11 +225,11 @@ workflows:
       - lint-dockerfile
       - create-and-upload-dockerimage:
           requires: [update-files,lint-dockerfile]
-      - create-cluster:
-          requires: [update-files, lint-dockerfile]
+      #- create-cluster:
+      #    requires: [update-files, lint-dockerfile]
       - test-eks:
           cluster-name: capstoneudacity-eksctl
-          requires: [create-cluster]
+      #    requires: [create-cluster]
       - create-deployment:
           cluster-name: capstoneudacity-eksctl
           requires: [test-eks, create-and-upload-dockerimage]
