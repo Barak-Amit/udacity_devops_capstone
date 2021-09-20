@@ -119,14 +119,14 @@ jobs:
             docker build --tag=abdocer123/udacity:capstone .
             docker image ls
             
-            docker run -d --rm --name myapp -p 8081:8080 abdocer123/udacity:capstone
+            docker run -d --rm --name capstone -p 8081:8080 abdocer123/udacity:capstone
             sleep 10
             docker container ls
             sleep 5
             export URL="http://localhost:8081"
             export output=$(curl -s $URL)
             echo "Output of curl : $output"
-            if [[ $output == *"Prakash"* ]]; then
+            if [[ $output == *"${CIRCLE_WORKFLOW_ID:0:7}"* ]]; then
                echo "Success"
               docker stop myapp
             else
