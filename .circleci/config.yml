@@ -159,7 +159,7 @@ jobs:
       - kubernetes/create-or-update-resource:
           get-rollout-status: true
           resource-file-path: eksCluster/deployment.yaml
-          resource-name: deployment/nginx-deployment
+          resource-name: abdocer123/udacity
 
   deploy-cluster1:
     docker:
