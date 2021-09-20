@@ -142,10 +142,10 @@ jobs:
           get-rollout-status: true
           resource-file-path: eksCluster/service.yaml
           resource-name: deployment/capstoneudacity
-      -run:
-        name: Rolling Deployment
-        command: |
-           kubectl rollout restart deployment/capstoneudacity
+      - run:
+          name: Rolling Deployment
+          command: |
+            kubectl rollout restart deployment/capstoneudacity
 
 
   test-cluster:
