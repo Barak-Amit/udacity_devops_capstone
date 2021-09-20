@@ -118,32 +118,26 @@ jobs:
           command: |
             docker build --tag=abdocer123/udacity:capstone .
             docker image ls
+            
+            docker run -d --rm --name myapp -p 8081:8080 abdocer123/udacity:capstone
+            sleep 10
+            docker container ls
+            sleep 5
+            export URL="http://localhost:8081"
+            export output=$(curl -s $URL)
+            echo "Output of curl : $output"
+            if [[ $output == *"Prakash"* ]]; then
+               echo "Success"
+              docker stop myapp
+            else
+              docker stop myapp
+              exit 1
+            fi
+            
             docker login --username $DOCKER_USER --password $DOCKER_PASS
             sh upload_docker.sh
 
   create-cluster:
-    docker:
-      - image: circleci/node
-    steps:
-      - checkout
-      - run:
-          name: Install AWS CLI dependencies
-          working_directory: /tmp
-          command: |
-            sudo apt-get update && sudo apt-get install -yy less
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            sudo ./aws/install
-      - run:
-          name: Create Cluster
-          working_directory: ./eksCluster
-          command: |
-            curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
-            sudo mv /tmp/eksctl /usr/local/bin
-            docker login --username $DOCKER_USER --password $DOCKER_PASS
-            sh create-cluster.sh
-
-  test-eks:
     executor: aws-eks/python3
     parameters:
       cluster-name:
@@ -203,13 +197,10 @@ workflows:
       - create-and-upload-dockerimage:
           requires: [update-files,lint-dockerfile]
       - create-cluster:
-          requires: [update-files]
-      - test-eks:
           cluster-name: capstoneudacity-eksctl
-          requires: [create-cluster]
       - create-deployment:
           cluster-name: capstoneudacity-eksctl
-          requires: [test-eks, create-and-upload-dockerimage]
+          requires: [create-cluster, create-and-upload-dockerimage]
       - test-cluster:
           cluster-name: capstoneudacity-eksctl
           requires: [create-deployment]
