@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-eksctl upgrade cluster -f ekscluster.yaml
+eksctl create cluster -f ekscluster.yaml
