@@ -127,9 +127,11 @@ jobs:
             export output=$(curl -s $URL)
             echo "Output of curl : $output"
             if [[ $output == *"${CIRCLE_WORKFLOW_ID:0:7}"* ]]; then
-               echo "Success"
+              echo "Success"
               docker stop capstone
             else
+              echo "Failure"
+              echo $output
               docker stop capstone
               exit 1
             fi
