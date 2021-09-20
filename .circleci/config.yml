@@ -146,18 +146,17 @@ jobs:
   deploy-cluster:
     executor: aws-eks/python3
     parameters:
-      cluster-name:
-        description: |
-          capstoneudacity-eksctl
-        type: string
+      cluster-name: capstoneudacity-eksctl
     steps:
+      - checkout
       - kubernetes/install
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: capstoneudacity-eksctl
-      - run:
-          command: |
-            kubectl get services
-          name: Test cluster
+          install-kubectl: true
+      - kubernetes/create-or-update-resource:
+          get-rollout-status: true
+          resource-file-path: eksCluster/deployment.yaml
+          resource-name: deployment/nginx-deployment
 
   deploy-cluster1:
     docker:
