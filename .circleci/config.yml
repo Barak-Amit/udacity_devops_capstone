@@ -143,7 +143,7 @@ jobs:
             docker login --username $DOCKER_USER --password $DOCKER_PASS
             sh create-cluster.sh
 
-  deploy-cluster:
+  test-eks:
     executor: aws-eks/python3
     parameters:
       cluster-name:
@@ -151,43 +151,16 @@ jobs:
           Name of the EKS cluster
         type: string
     steps:
-      - checkout
       - kubernetes/install
       - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: capstoneudacity-eksctl
-          install-kubectl: true
-      - kubernetes/create-or-update-resource:
-          get-rollout-status: true
-          resource-file-path: eksCluster/deployment.yaml
-          resource-name: abdocer123/udacity
-
-  deploy-cluster1:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - checkout
+          cluster-name: << parameters.cluster-name >>
       - run:
-          name: Install AWS CLI dependencies
-          working_directory: /tmp
+          name: Kube cluster
           command: |
-            sudo apt-get update && sudo apt-get install -yy less
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            sudo ./aws/install
-      - run:
-          name: deploy Cluster
-          working_directory: ./eksCluster
-          command: |
-              sudo apt-get install openssl
-              curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/kubectl
-              openssl sha1 -sha256 kubectl
-              chmod +x ./kubectl
-              mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
-              echo "==============deployment started================="
-              kubectl --v=6 apply -f deployment.yaml
-              echo "==============Service Started===================="
-              kubectl --v=6 apply -f service.yaml
-
+            kubectl get svc
+            kubectl get nodes
+            kubectl get deployment
+            kubectl get pods
 
 
 workflows:
@@ -199,6 +172,6 @@ workflows:
           requires: [update-files,lint-dockerfile]
       - create-cluster:
           requires: [update-files]
-      - deploy-cluster:
+      - test-eks:
           cluster-name: capstoneudacity-eksctl
           requires: [create-and-upload-dockerimage, create-cluster]
