@@ -119,10 +119,10 @@ jobs:
             docker build --tag=abdocer123/udacity:capstone .
             docker image ls
             
-            docker run -d --rm --name capstone -p 8081:8080 abdocer123/udacity:capstone
+            docker run -d --rm --name capstone -p 80:80 abdocer123/udacity:capstone
             sleep 10
             docker container ls
-            sleep 5
+            sleep 20
             export URL="http://localhost:8080/"
             echo $(curl -s $URL)
             echo $(curl -s $http://localhost:8081/)
