@@ -123,10 +123,7 @@ jobs:
             sleep 10
             docker container ls
             sleep 20
-            export URL="http://localhost:8080/"
-            echo $(curl -s $URL)
-            echo $(curl -s http://localhost:8081/)
-            echo $(curl -s http://localhost:80/)
+            export URL="http://localhost:80/about"
             export output=$(curl -s $URL)
             echo "Output of curl : $output"
             if [[ $output == *"${CIRCLE_WORKFLOW_ID:0:7}"* ]]; then
