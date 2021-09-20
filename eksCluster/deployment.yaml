@@ -21,7 +21,7 @@ spec:
         app: capstoneudacity
     spec:
       containers:
-      - image: abdocer123/udacity:capstone
+      - image: abdocer123/udacity:latest
         imagePullPolicy: Always
         name: capstoneudacity
         ports:

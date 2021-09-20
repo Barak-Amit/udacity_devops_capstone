@@ -56,12 +56,10 @@ jobs:
           name: Create and Upload Image to DockerHub
           working_directory: ./app
           command: |
-            docker build --tag=abdocer123/udacity:capstone .
+            docker build --tag=abdocer123/udacity .
             docker image ls
 
-            echo templates/about.html
-            
-            docker run -d --rm --name capstone -p 80:80 abdocer123/udacity:capstone
+            docker run -d --rm --name capstone -p 80:80 abdocer123/udacity:latest
             sleep 10
             docker container ls
             sleep 20

@@ -6,13 +6,13 @@
 # Step 1:
 # Create dockerpath
 # dockerpath=<your docker ID/path>
-dockerpath=abdocer123/udacity:capstone
+dockerpath=abdocer123/udacity:latest
 
 # Step 2:  
 # Authenticate & tag
 echo "Docker ID and Image: $dockerpath"
 docker login
-docker tag mlapp:latest $dockerpath
+docker tag udacity:latest $dockerpath
 
 # Step 3:
 # Push image to a docker repository
