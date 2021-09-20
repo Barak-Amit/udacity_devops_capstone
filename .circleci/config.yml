@@ -107,8 +107,7 @@ jobs:
             make lint
 
   create-and-upload-dockerimage:
-    docker:
-      - image: python:3.7.3-stretch
+    machine: true
     steps:
       - checkout
       - attach_workspace:
@@ -117,9 +116,6 @@ jobs:
           name: Create and Upload Image to DockerHub
           working_directory: ./app
           command: |
-            python3 -m venv ~/.devops
-            . ~/.devops/bin/activate
-            
             docker build --tag=abdocer123/udacity:capstone .
             docker image ls
             
