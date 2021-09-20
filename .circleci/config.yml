@@ -116,6 +116,8 @@ jobs:
           name: Create and Upload Image to DockerHub
           working_directory: ./app
           command: |
+            python3 -m venv ~/.devops
+            . ~/.devops/bin/activate
             docker build --tag=abdocer123/udacity:capstone .
             docker image ls
             
@@ -123,7 +125,7 @@ jobs:
             sleep 10
             docker container ls
             sleep 5
-            export URL="http://localhost:8000/about.html"
+            export URL="http://localhost:80/about"
             export output=$(curl -s $URL)
             echo "Output of curl : $output"
             if [[ $output == *"${CIRCLE_WORKFLOW_ID:0:7}"* ]]; then
@@ -200,6 +202,7 @@ workflows:
           requires: [update-files,lint-dockerfile]
       - create-cluster:
           cluster-name: capstoneudacity-eksctl
+          requies: [update-files, lint-dockerfile]
       - create-deployment:
           cluster-name: capstoneudacity-eksctl
           requires: [create-cluster, create-and-upload-dockerimage]
