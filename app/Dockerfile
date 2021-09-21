@@ -1,5 +1,7 @@
 FROM python:3.7.3-stretch
 
+Added to check whether it will fail lint or not
+
 ## Step 1:
 # Create a working directory
 WORKDIR /app
